@@ -9,13 +9,14 @@
     ViewData["Title"] = Model.Name;
     ViewData["WideForm"] = true;
 }
-
-<strong>Owner: </strong> @Model.UserName<br/>
-<strong>Information: </strong>
-<span>@Model.Info</span>
-<div class="bg">
-    <a asp-action="UserPage" asp-controller="User" asp-route-id="@Model.UserId" class="act">Borrow this spice</a>
-    <br/>
+<div style="width: 100%">
+    <strong>Owner: </strong> @Model.UserName<br />
+    <strong>Information: </strong>
+    <span>@Model.Info</span>
+    <div class="bg">
+        <a asp-action="UserPage" asp-controller="User" asp-route-id="@Model.UserId" class="act">Borrow this spice</a>
+        <br />
+    </div>
 </div>
 @if(!string.IsNullOrEmpty(Model.Image.BaseFileName)) {
 
