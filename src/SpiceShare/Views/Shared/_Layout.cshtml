@@ -36,7 +36,7 @@ if (!jsfl) {
 		{
 		<link rel="stylesheet" href="~/css/forms.css" />
 	}
-	<style>
+<style>
 @RenderSection("style", required: false)
 	</style>
 </environment>
@@ -62,19 +62,16 @@ html,body,ul,li,h1,.sl{box-sizing:border-box;margin:0;padding:0}body{min-height:
 <a href="/" class="lg" title="to front page">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="100 100 380 622" aria-labelledby="title">
 <title id="title">Logo. Go to front page.</title>
-<g>
-	<path class="chr" d="m294 169c-45 0.4-95 27-116 74 8.9 203 212 138 174 301-14.3 28.6-32 64-108.4 57.6-93.5-58-153 49-48 70 90-2 181-32.3 200-106 14-66 13-69-15-123-29-54.3-106-91-106-91 0 0-74-57.5-43-103 105-81 107-56 173 14.6l37.2 57.1C438.7 287 401 192 336 172c-13-4.1-30-3-42-3z"/>
-	<path class="chg" d="m195 585-30-6.7c-19-4.4-36-27-36-27 0 0-31-69-24-31 7 39 28 84 28 66l0.1 27c0.1 18 17 30 17 30z" style="fill:#3c8e2c;"/>
-</g>
-</svg>
-</a>
+<g><path class="chr" d="m294 169c-45 0.4-95 27-116 74 8.9 203 212 138 174 301-14.3 28.6-32 64-108.4 57.6-93.5-58-153 49-48 70 90-2 181-32.3 200-106 14-66 13-69-15-123-29-54.3-106-91-106-91 0 0-74-57.5-43-103 105-81 107-56 173 14.6l37.2 57.1C438.7 287 401 192 336 172c-13-4.1-30-3-42-3z"/>
+<path class="chg" d="m195 585-30-6.7c-19-4.4-36-27-36-27 0 0-31-69-24-31 7 39 28 84 28 66l0.1 27c0.1 18 17 30 17 30z" style="fill:#3c8e2c;"/>
+</g></svg></a>
 @if (!string.IsNullOrEmpty(ViewData["Title"] as string))
 {
-	<h1 class="hh">@ViewData["Title"]</h1>
+<h1 class="hh">@ViewData["Title"]</h1>
 }
 </div>
 <nav class="hm" aria-label="main navigation" role="navigation">
-	@RenderSection("nav", required: false)
+@RenderSection("nav", required: false)
 </nav>
 </header>
 <div id="hw" style="display: none"></div>
@@ -97,8 +94,8 @@ html,body,ul,li,h1,.sl{box-sizing:border-box;margin:0;padding:0}body{min-height:
 	</nav>
 <footer style="min-height: 110px;">
 <div>
-    <div style="min-height: 60px;" id="resetinfo"></div>
-    <span id="privlinkph"></span>
+<div style="min-height: 60px;" id="resetinfo"></div>
+<span id="privlinkph"></span>
 </div>
 </footer>
 </body>
