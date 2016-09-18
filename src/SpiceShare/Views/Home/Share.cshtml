@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "New user";
+    ViewData["HasForm"] = true;
+}
+@section style {
+   .cc {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+} /*Centered Content*/
+   
+}
+<div style="display: none" class="i cc" id="privlinkar" >
+ 
+</div>
+<p>
+    To share a spice, you need to register as a user. Registering a new user is free, and done in seconds. By registering you get a link to your new, private page. Do not share this private link with anyone.
+</p>
+<p>You will also get a public page, that everyone can see. This page lists the spices you share.</p>
+<form asp-action="new" asp-controller="User">
+    <input type="submit" class="act" value="Register as a user" />
+</form>
+
+<p>After you register, you will get a link to your private page at the bottom of every screen. This link will only show in this browser on this computer, som please bookmark the link or email to yourselves to be able to get back into your private page.</p>
+
+<environment names="Development">
+    <script async src="~/js/pagespecific/home/share.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/home/share.min.js" asp-append-version="true"></script>
+</environment>
+
+
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="">Home</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Find spice using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Find spice using position</a></li>
+    </ul>
+}
+
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="User" asp-action="NearMeZip">Find spice using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Find spice using position</a></li>
+    </ul>
+}

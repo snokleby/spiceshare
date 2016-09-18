@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Expired conent";
+}
+<h2>Ooops</h2>
+<p>It looks like you tried to access some expired content. In this demo the content is removed at a regular interval, and the site is restored to a default-state.</p>
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
+
+<environment names="Development">
+    <script async src="~/js/expired.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/expired.min.js" asp-append-version="true"></script>
+</environment>

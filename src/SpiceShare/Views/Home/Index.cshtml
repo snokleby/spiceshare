@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "SpiceShare";
+}
+@{ 
+//    Html.RenderPartial("Header");
+ //   await FlushAsync(); 
+}
+@section metahead {
+<link rel="prefetch" href="/User/NearMe" />
+<link rel="prefetch" href="/Home/Share" />
+}
+<p>Tired of buying spice for a new recipe, and never use it again? Use this site to find people nearby that you can borrow spice from, and let other people borrow from you.</p>
+<div class="bg">
+    <a class="act" asp-action="NearMe" asp-controller="User">Borrow a spice</a>
+    <a class="act" asp-action="Share" asp-controller="Home">Share a spice</a>
+</div>
+@await Component.InvokeAsync("LatestSpices")
+
+@{
+   // Html.RenderPartial("Footer");
+    Html.RenderPartial("_BaseJsInclude");
+}
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}

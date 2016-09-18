@@ -1,0 +1,20 @@
+﻿@model SpiceShare.DataAccess.User
+<table>
+    <caption>About this user</caption>
+    <tr>
+        <td>Name:</td>
+        <td> @Model.Name</td>
+    </tr>
+    <tr>
+        <td>Country:</td>
+        <td>@Model.Location.Country</td>
+    </tr>
+    <tr>
+        <td>Zip/postal code:</td>
+        <td> @Model.Location.ZipCode</td>
+    </tr>
+    <tr>
+        <td>Email-address</td>
+        <td> @Model.Email</td>
+    </tr>
+</table> 

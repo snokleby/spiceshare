@@ -1,0 +1,101 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/forms.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/forms.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/base.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/user/privatepageadmin.min.js",
+    "inputFiles": [
+      "wwwroot/js/forms.js",
+      "wwwroot/js/pagespecific/user/privatepageadmin.js",
+      "wwwroot/js/Geolocation.js",
+      "wwwroot/js/site.js"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/jsmin/spice/privatepageadmin.min.js",
+    "inputFiles": [
+      "wwwroot/js/forms.js",
+      "wwwroot/js/pagespecific/spice/privatepageadmin.js",
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/user/publicuserpage.min.js",
+    "inputFiles": [
+      "wwwroot/js/Geolocation.js",
+      "wwwroot/js/pagespecific/user/PublicUserPage.js",
+      "wwwroot/js/site.js"
+
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/spice/publicspicepage.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/user/nearmegeo.min.js",
+    "inputFiles": [
+      "wwwroot/js/Geolocation.js",
+      "wwwroot/js/pagespecific/user/NearMeCommon.js",
+      "wwwroot/js/pagespecific/user/NearMeGeo.js",
+      "wwwroot/js/autoSearch.js",
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/user/nearmezip.min.js",
+    "inputFiles": [
+      "wwwroot/js/pagespecific/user/NearMeCommon.js",
+      "wwwroot/js/pagespecific/user/NearMeZip.js",
+      "wwwroot/js/autoSearch.js",
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/imageupload.min.js",
+    "inputFiles": [
+      "wwwroot/js/imageupload.js",
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/expired.min.js",
+    "inputFiles": [
+      "wwwroot/js/expired.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/lazy.min.js",
+    "inputFiles": [
+      "wwwroot/js/lazy.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/home/share.min.js",
+    "inputFiles": [
+      "wwwroot/js/pagespecific/home/share.js"
+    ]
+  }
+]

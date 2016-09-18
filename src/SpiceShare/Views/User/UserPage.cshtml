@@ -1,0 +1,104 @@
+﻿
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using SpiceShare.ImageProcessing
+@model SpiceShare.Model.UserPageViewModel
+
+@{
+    ViewData["Title"] = "User page for " + Model.User.Name;
+    ViewData["HasForm"] = true;
+
+}
+@section style {
+    @{
+        Html.RenderPartial("_spicelistcss");
+    }
+}
+@Html.DisplayFor(m => m.User, "user.cshtml")
+@if (Model.User.Spices != null)
+    {
+        <h2>Spices shared by this user:</h2>
+        <ul class="sl">
+        @foreach (var spice in Model.User.Spices)
+        {
+        <li class="sl"><div>
+        <a asp-controller="Spice" asp-action="SpicePage" asp-route-id="@(spice.SpiceId)">@spice.Name</a>
+        <text>
+        (
+        <a href="mailto:@(Model.User.Email)?subject=SpiceShare%20-%20@(spice.Name)&body=Hi, can%20I%20borrow%20this%20spice%20from%20you?">Request by mail</a>)
+        </text>
+        </div>
+        </li>
+        }
+    </ul>
+}
+@if (Model.User.Location.Lat != null && Model.User.Location.Lon != null)
+{
+    <div class="hd" id="jslocation">
+        <div class="bg">
+            <button class="act" id="updateuserloc">Find distance to this user</button>
+        </div>
+    </div>
+    <span id="distajaxerr" class="w" style="display: none"></span>
+    <div class="dhj posfallback">
+        <p class="w">We are unable to detect your position, so we cannot automatically find the distance to this user. If you know your position, use the form below.</p>
+    </div>
+    <span id="geowait" style="display: none"></span>
+    <span id="geoerror" style="display: none"></span>
+
+    <div class="posfallback dhj">
+        <form>
+            <fieldset>
+                <legend>Your position</legend>
+                <div>
+                    <label for="lat">Latitude:</label><input asp-for="Lat" type="number" step="any" id="lat" />
+                </div>
+                <div>
+                    <label for="lon">Longitude:</label><input asp-for="Lon" type="number" step="any" id="lon" />
+                </div>
+            </fieldset>
+            <input type="submit" class="act" id="locationaction" value="Check distance to user" />
+        </form>
+    </div>
+
+    <input type="hidden" asp-for="Id" id="userid" />
+
+    @if (!string.IsNullOrEmpty(Model.Distance))
+    {
+       <div> Distance to user: about @Model.Distance</div>
+
+    }
+    <br />
+    <div id="distancetext" style="display: none">
+        Distance to user: about <span id="distance" style="display: none"></span>
+    </div>
+}
+else
+{
+    <span id="jslocation"></span>
+    <span id="locationaction"></span>
+    <span id="updateuserloc"></span>
+
+}
+    <environment names="Development">
+        <script async src="~/js/GeoLocation.js" asp-append-version="true"></script>
+        <script async src="~/js/pagespecific/user/PublicUserPage.js" asp-append-version="true"></script>
+        <script async src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script async src="~/jsmin/user/publicuserpage.min.js" asp-append-version="true"></script>
+    </environment>
+
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+         <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}

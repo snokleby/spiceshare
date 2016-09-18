@@ -1,0 +1,133 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using SpiceShare.ImageProcessing
+@model SpiceShare.Models.SpiceViewModel
+@{
+    ViewData["Title"] = "Private page for this spice";
+    ViewData["HasForm"] = true;
+    ViewData["WideForm"] = true;
+}
+<p>
+This is a private page for this spice. Do not share it with anyone. It also has a
+<a asp-action="spicepage" asp-controller="spice" asp-route-id="@Model.SpiceId">public page</a>, which you can share with the world.
+</p>
+@{
+    var incompleteClass = "w";
+    var validclass = "hd";
+    var completeClass = "hd";
+}
+@if (Model.IsComplete)
+{
+    incompleteClass = "hd";
+    <span id="completefromserver"></span>
+    <span id="validfromserver"></span>
+}
+else if (Model.IsValid)
+{
+    incompleteClass = "hd";
+    validclass = "i";
+    <span id="validfromserver"></span>
+}
+<div class="sc">
+<section>
+    <form asp-controller="Spice" asp-action="PrivateSpicePage">
+
+        <fieldset>
+            <legend>Information about the spice</legend>
+            <div class="t">
+                <div>
+                    <div class="lw"><label for="name">Name of spice:</label><span id="name_sh" role="status" aria-relevant="all" aria-live="polite"></span></div>
+                    <input id="name" placeholder="Red chili" aria-required="true" data-help="name_help" aria-controls="name_sh" aria-describedby="name_help name_val" asp-for="Name"/>
+                    <span asp-validation-for="Name"></span>
+                    <span id="name_val" style="display: none">You must enter a name.</span>
+                    <div id="name_help" class="dhj">The name of the spice so people can search for it.</div>
+                </div>
+            </div>
+            <div class="t">
+                <div>
+                    <div class="lw"><label for="info">Information:</label><span id="info_sh"  role="status" aria-relevant="all" aria-live="polite"></span></div>
+                    <textarea id="info" placeholder="All sorts of useful info" data-help="info_help" aria-controls="info_sh" aria-describedby="info_help" asp-for="Info"></textarea>
+                    <div id="info_help" class="dhj">Fill in info that might be useful for people wanting to borrow it.</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <input type="hidden" asp-for="SpiceIdentity"/>
+        <fieldset>
+            <legend>Photo</legend>
+            @if (string.IsNullOrEmpty(Model.Image.BaseFileName))
+            {
+                <div class="bg">
+                    <a class="act" asp-action="TakeSpicePhoto" asp-controller="spice" asp-route-spiceIdentity="@(Model.SpiceIdentity)">Take photo</a>
+                </div>
+            }
+            else
+            { <div class="bg">
+                <a class="act" asp-action="TakeSpicePhoto" asp-controller="spice" asp-route-spiceIdentity="@(Model.SpiceIdentity)">Update photo</a>
+                </div>
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="alttext">Describe the photo:</label><span id="alttext_sh" aria-live="polite"></span></div>
+                        <textarea id="alttext" placeholder="Text describing the picture." aria-controls="alttext_sh" aria-required="true" data-help="alttext_help" aria-describedby="alttext_help alttext_val" asp-for="AltText"></textarea>
+                        <span asp-validation-for="AltText"></span>
+                        <span id="alttext_val" style="display: none">You must enter a description.</span>
+                        <div id="alttext_help" class="dhj">This helps visually impaired users, and search-engines. We have tried to autogenerate this for you.</div>
+                    </div>
+                </div>
+
+                }
+</fieldset>
+        <span id="netwerr" style="display:none;" class="w"></span>
+
+        <div class="dhj" id="submit">
+            <input type="submit" class="act" value="Save"/>
+        </div>
+    </form>
+    <div class="@incompleteClass" id="incwn">
+        Please fill in the information above to complete the registration of this spice. It will not be available to other users before you do.
+    </div>
+    <span class="@validclass" id="almostcomplete">
+This spice is now searchable, but we suggest you add a description.
+</span>
+ <div class="@completeClass" id="full">
+Thank you. This spice will now be searchable.
+</div>
+</section>
+    <section>
+        @if (!string.IsNullOrEmpty(Model.Image.BaseFileName))
+        {
+            var srcsetStr = "";
+            foreach (ImageSize size in Enum.GetValues(typeof(ImageSize)))
+            {
+                srcsetStr = srcsetStr + Model.Image.WebPathForSize(size) + " " + Model.Image.WidthForSize(size) + "w,";
+
+            }
+            srcsetStr = srcsetStr.Substring(0, srcsetStr.Length - 1);
+
+            <img style="margin: 0 auto; max-width: 100%" sizes="(max-width: 500px) 70vw,
+			(max-width: 800px) 40vw,            
+            400px" srcset="@srcsetStr" src="@(Model.Image.WebPathForSize(ImageSize.Tiny))" alt="@Model.Image.AlternativeDescription" />
+        }
+    </section>
+</div>
+        <environment names="Development">
+            <script src="~/js/forms.js" asp-append-version="true"></script>
+            <script src="~/js/pagespecific/spice/privatepageadmin.js" asp-append-version="true"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment names="Staging,Production">
+            <script async src="~/jsmin/spice/privatepageadmin.min.js" asp-append-version="true"></script>
+        </environment>
+
+        @section nav {
+            <ul>
+                <li><a asp-controller="Home" asp-action="">Home</a></li>
+                <li><a asp-controller="User" asp-action="NearMe">Search</a></li>
+                <li><a asp-controller="User" asp-action="PrivateUserPage" asp-route-identity="@Model.UserIdentity">Your private page</a></li>
+            </ul>
+        }
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="User" asp-action="NearMe">Search</a></li>
+        <li><a asp-controller="User" asp-action="PrivateUserPage" asp-route-identity="@Model.UserIdentity">Your private page</a></li>
+    </ul>
+}

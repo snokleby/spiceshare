@@ -1,0 +1,177 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model SpiceShare.Models.UserViewModel
+@{
+    ViewData["Title"] = "Your private page";
+    ViewData["HasForm"] = true;
+    ViewData["WideForm"] = true;
+
+}
+<p>
+    This is your private page. Do not share it with anyone. You also have a
+    <a asp-action="UserPage" asp-controller="User" asp-route-id="@Model.Id">public page</a>, which you can share with the world.
+</p>
+<p>
+    Fill in the information below to so people can search for your spices.
+</p>
+<strong class="dhj" id="storeurl">It seems your browser does not support the technology we need to keep track of your private page. Without this (secret) link you cannot access your profile, so please copy the link to this page somewhere safe.</strong>
+<div class="sc">
+    <section>
+        @{
+            var incompleteClass = "w";
+            var validclass = "hd";
+            var completeClass = "hd";
+        }
+        @if (Model.ProfileIsComplete)
+        {
+            incompleteClass = "hd";
+            <span id="completefromserver"></span>
+            <span id="validfromserver"></span>
+        }
+        else if (Model.ProfileIsValid)
+        {
+            incompleteClass = "hd";
+            validclass = "i";
+            <span id="validfromserver"></span>
+        }
+               
+        <form id="userdetailsf" asp-controller="User"
+              asp-action="PrivateUserPage" asp-route-identity="@Model.UserIdentity">
+            <fieldset>
+                <legend>Contact-info</legend>
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="name">Username:</label><span id="name_sh"  role="status" aria-relevant="all" aria-live="polite"></span></div>
+                        <input id="name" placeholder="Jon doe" aria-controls="name_sh"  aria-required="true" required data-help="name_help" autocomplete="name" autocapitalize="words" aria-describedby="name_help name_val" asp-for="Name"/>
+                        <span asp-validation-for="Name"></span>
+                        <span id="name_val" style="display: none">You must enter a name.</span>
+                        <div id="name_help" class="dhj">Visible to everyone.</div>
+                    </div>
+                </div>
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="email">Email address:</label><span id="email_sh"  role="status" aria-relevant="all" aria-live="polite"></span></div>
+                        <input id="email" placeholder="spicelover@example.com" aria-controls="email_sh" type="email" data-help="email_help" aria-required="true" required aria-describedby="email_help email_val" asp-for="Email"/>
+                        <span asp-validation-for="Email"></span>
+                        <span id="email_val" style="display: none">You must enter a valid email-address.</span>
+                        <div id="email_help" class="dhj">Visible to everyone.</div>
+                    </div>
+                </div>
+            </fieldset>
+            <span id="netwerr" style="display:none;" class="w"></span>
+
+            <fieldset>
+                <legend>Your location</legend>
+
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="country">Country (as written in your language):</label><span id="country_sh" role="status" aria-relevant="all" aria-live="polite"></span></div>
+                        <input id="country" placeholder="USA" type="text"  aria-controls="country_sh" aria-required="true" autocomplete="country" required data-help="countryhelp" aria-describedby="countryhelp country_val" asp-for="Country"/>
+                        <span asp-validation-for="Country"></span>
+                        <span id="country_val" style="display: none">You must enter a country.</span>
+                        <div id="countryhelp" class="dhj">We need this so people can locate you.</div>
+                    </div>
+                </div>
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="zipcode">Zip code/postal code:</label><span id="zipcode_sh" aria-live="polite"></span></div>
+                        <input id="zipcode" placeholder="90210" type="text"  aria-controls="zipcode_sh" autocomplete="postal-code" aria-required="true" data-help="ziphelp" aria-describedby="ziphelp zipcode_val" asp-for="ZipCode"/>
+                        <span asp-validation-for="ZipCode"></span>
+                        <span id="zipcode_val" style="display: none">You must enter the Zip/postal code for your area</span>
+                        <div id="ziphelp" class="dhj">We need this so people can locate you. Use whatever standard is used in your country.</div>
+                    </div>
+                </div>
+                <div id="jslocation" class="hd">
+                    <div >
+                        <button id="updateuserloc" class="act">Find my location.</button>
+                        <span id="geoerror" style="display: none">Sorry, an error occured. Make sure you allow this website to access your location.</span>
+                        <span id="geowait" style="display: none"></span>
+                    </div>
+                    <br/>
+                </div>
+                <div class="dhj posfallback">
+                    <p class="w">We are unable to detect your position. Please fill in the coordinates manually if possible. If not, users can still locate you by country and zipcode.</p>
+                </div>
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="lat">Latitude:</label><span id="lat_sh"  role="status" aria-relevant="all" aria-live="polite"></span></div>
+                        <input id="lat" type="number" step="any" data-help="lathelp" aria-controls="lat_sh" aria-describedby="lathelp" asp-for="Lat"/>
+                        <span asp-validation-for="Lat"></span>
+                        <div id="lathelp" class="dhj">We will protect your privacy, and limit the accuracy to 200 meters.</div>
+                    </div>
+                </div>
+                <div class="t">
+                    <div>
+                        <div class="lw"><label for="lon">Longitude:</label><span id="lon_sh"  role="status" aria-relevant="all" aria-live="polite"></span></div>
+                        <input id="lon" type="number" step="any" data-help="lonhelp" aria-controls="lon_sh" aria-describedby="lonhelp" asp-for="Lon"/>
+                        <span asp-validation-for="Lon"></span>
+                        <div id="lonhelp" class="dhj">We will protect your privacy, and limit the accuracy to 200 meters.</div>
+                    </div>
+                </div>
+            </fieldset>
+             <input type="hidden" asp-for="UserIdentity"/>
+            <div class="@incompleteClass" id="incwn">
+                Please fill in the information above to complete your profile.
+            </div>
+            <div class="@validclass" id="almostcomplete">
+               Your profile is almost complete. Fill in your geo-location for the full experience.
+            </div>
+            <div class="@completeClass" id="full">
+                Thank you. Your profile is complete.
+            </div>
+
+            <div class="dhj" id="submit">
+                <input type="submit" class="act" value="Save"/>
+            </div>
+        </form>
+    </section> 
+    <section>
+      
+        <form asp-action="new" asp-controller="Spice">
+            <h2>Your spices</h2>
+            @if (Model.Spices != null && Model.Spices.Count()>0)
+            {
+                foreach (var spice in Model.Spices)
+                {
+                    <a asp-controller="Spice" asp-action="PrivateSpicePage" asp-route-identity="@(spice.SpiceIdentity)">@(string.IsNullOrEmpty(spice.Name) ? "no name given" : spice.Name)</a>
+                    <br />
+                }
+            }
+            else
+            {
+                <p>Here we will list your registered spices. When you register a spice, you can also take a photo of it.</p>
+            }<br />
+            <input type="hidden" id="idfornewspice" asp-for="UserIdentity"/>
+            <input type="submit"  class="act" value="Register a new spice"/>
+        </form>
+    </section>
+</div>
+<span id="privatelinksetter" data-identity="@Model.UserIdentity"></span>
+
+<strong>
+    Anyone with the link to this page can modify your entries, so keep your link private.
+</strong>
+<environment names="Development">
+    <script src="~/js/forms.js" asp-append-version="true"></script>
+    <script src="~/js/pagespecific/user/privatepageadmin.js" asp-append-version="true"></script>
+    <script src="~/js/GeoLocation.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/user/privatepageadmin.min.js" asp-append-version="true"></script>
+</environment>
+
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="">Home</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Find spice using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Find spice using position</a></li>
+    </ul>
+}
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="User" asp-action="NearMeZip">Find spice using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Find spice using position</a></li>
+   </ul>
+}

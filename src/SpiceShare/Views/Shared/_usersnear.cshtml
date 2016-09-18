@@ -1,0 +1,55 @@
+﻿@using System
+@model List<SpiceShare.Models.LocationBasedUser>
+@{
+    Layout = null;
+}
+@if (!Model.Any())
+{
+    <p class="wl">No results found. Try searching using only parts of the name. We need at least one character from spice to return any results.</p>
+    <p class="wl">If this search returned results earlier, remember that the content of this site is reset regularly.</p>
+
+}
+else
+{
+    <h2>Results:</h2>
+<ul class="sl">
+    
+    @foreach (var user in Model)
+    {
+        var distancestr = "";
+        if (user.ZipCodeBased)
+        {
+            distancestr = "";
+        }
+        else
+        {
+            if (user.Distance > 1000)
+            {
+                distancestr = "(" + Math.Round(user.Distance / 1000, 1) + " km away)";
+            }
+            else if (user.Distance > 0)
+            {
+                distancestr = "(" + user.Distance + " meters away)";
+            }
+        }
+        <li class="sl">
+            <ul class="sl">
+                @foreach (var spice in user.User.Spices)
+                {
+                    <li class="sl"><a asp-action="SpicePage" asp-controller="Spice" asp-route-id="@spice.SpiceId">@spice.Name</a></li>
+                }
+            </ul>
+            <div> <strong>Located at user</strong> <a asp-controller="User" asp-action="UserPage" asp-route-id="@user.User.UserId">@user.User.Name</a>@distancestr</div>
+            <div class="lui">
+
+              
+
+                @Html.DisplayFor(m => user.User, "/Views/Shared/DisplayTemplates/UserShort.cshtml")
+
+                <hr />
+            </div>
+        </li>
+    }
+</ul>
+
+}

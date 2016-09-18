@@ -1,0 +1,29 @@
+﻿@using System
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model TimeSpan
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    if (Model.TotalSeconds < 2)
+    {
+        <span>
+            The content of this site has been reset. Please refresh this page to avoid errors.           
+        </span>
+    }
+    else
+    {
+        <span>
+<input type="hidden" id="timeexpires" value="@((DateTime.Now + Model).ToFileTime())"/>
+            <input type="hidden" value="@(DateTime.Now.ToFileTime())" id="timenow" />
+    This site will be restored to a default state in <span id="resetmin">@Model.Minutes</span> minutes, <span id="resetsec">@Model.Seconds</span> seconds.
+</span>
+    }
+    <environment names="Development">
+        <script async src="~/js/lazy.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script async src="~/jsmin/lazy.min.js" asp-append-version="true"></script>
+    </environment>
+}

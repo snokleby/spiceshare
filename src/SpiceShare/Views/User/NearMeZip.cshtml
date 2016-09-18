@@ -1,0 +1,91 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using SpiceShare.ImageProcessing
+@model SpiceShare.Models.NearMeViewModel
+
+@{
+    ViewData["Title"] = "Find using Zip/postal code";
+    ViewData["HasForm"] = true;
+
+}
+
+@section style {
+    @{
+        Html.RenderPartial("_spicelistcss");
+    }
+}
+<form asp-action="NearMeZip" asp-controller="User" method="GET">
+    <div class="t">
+        <div>
+            <label for="search">Spice (mandatory):</label>
+            <input asp-for="Search" aria-controls="userslist" type="text" data-help="search_help" id="search" aria-required="true" required placeholder="red pepper" />
+            <div id="search_help" class="dhj">Enter only part of the name if you are unsure.</div>
+        </div>
+    </div>
+        
+    <span asp-validation-for="GenError"></span>
+    <span class="w" id="erfld" style="display:none;"></span>
+
+    <fieldset>
+        <legend>Your location</legend>
+        <p style="padding-top:0; margin-top:5px;">Not mandatory, but helps narrow the search to people near you.</p>
+        <div class="t">
+            <div>
+                <label for="country">Country:</label><input asp-for="Country" type="text"  aria-controls="userslist"  autocomplete="country" aria-describedby="country_help" data-help="country_help" id="country"/>
+                <div id="country_help" class="dhj">Use the name of the country in your local language.You can enter a partial name.</div>
+
+            </div>
+            </div>
+        <div class="t">
+            <div>
+                <label for="zipcode">Zip/postal code:</label><input asp-for="Zipcode" type="text"  aria-controls="userslist" autocomplete="postal-code" aria-describedby="zip_help" data-help="zip_help" id="zipcode" />
+                <div id="zip_help" class="dhj">Use the Zip/postal code system that is local to your country.</div>
+
+            </div>
+        </div>
+    
+    </fieldset>
+    <div class="dhj" id="subbutton">
+        <input type="submit" value="find" class="act" id="find" />
+    </div>
+</form>
+<div class="ph"><span id="searchpr" style="display:none">Searching...</span></div>
+<div id="userslist" role="region" aria-live="polite">
+    @if (Model.Users != null)
+    {
+        if (Model.ZipCodeSearch)
+        {
+            <p>We did not find any users in your exact zipcode. The list below are users that might be in nearby zipcodes.</p>
+
+        }
+        Html.RenderPartial("_usersnear", Model.Users);
+    }
+</div>
+<environment names="Development">
+    <script async src="~/js/pagespecific/user/NearMeCommon.js" asp-append-version="true"></script>
+    <script async src="~/js/pagespecific/user/NearMeZip.js" asp-append-version="true"></script>
+    <script async src="~/js/autoSearch.js" asp-append-version="true"></script>
+    <script async src="~/js/site.js" asp-append-version="true"></script>
+
+
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/user/nearmezip.min.js" asp-append-version="true"></script>
+</environment>
+
+@section nav {
+  <ul>
+      <li><a asp-controller="Home" asp-action="">Home</a></li>
+      <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+     <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+</ul>
+}
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+         <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}

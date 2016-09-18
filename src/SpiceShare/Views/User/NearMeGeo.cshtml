@@ -1,0 +1,88 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using SpiceShare.ImageProcessing
+@model SpiceShare.Models.NearMeViewModel
+
+@{
+    ViewData["Title"] = "Spices near me";
+    ViewData["HasForm"] = true;
+
+}
+@section style {
+    @{ 
+        Html.RenderPartial("_spicelistcss");
+    }
+}
+<span id="jslocation"></span>
+<form asp-action="NearMeGeo" asp-controller="User" method="GET">
+    <div class="t">
+        <div>
+            <label for="search">Spice (mandatory):</label>
+            <input asp-for="Search" type="text" data-help="search_help" id="search" aria-required="true" required placeholder="red pepper"/>
+            <div id="search_help" class="dhj">Enter only part of the name if you are unsure.</div>
+        </div>
+    </div>
+    <div class="ph">
+        <span id="geowait" style="display: none"></span>
+    </div>
+    <span id="geoerror" style="display: none"></span>
+    <div class="dhj posfallback">
+        <div class="w">
+            We are unable to detect your position. Please enter your coordinates below, or <a asp-action="NearMeZip" asp-controller="User">search using country and zipcode</a>.
+        </div>
+        </div>
+    <div class="dhj posfallback">
+        <fieldset>
+            <legend>Your position</legend>
+            <div>
+                <label for="lat">Latitude:</label><input asp-for="Lat" type="number" step="any" id="lat" />
+            </div>
+            <div>
+                <label for="lon">Longitude:</label><input asp-for="Lon" type="number" step="any" id="lon" />
+            </div>
+        </fieldset>
+    </div>
+
+    <span asp-validation-for="GenError"></span>
+    <span class="w" id="erfld" style="display:none;"></span>
+    <div class="dhj" id="subbutton">
+        <input type="submit" class="act" id="find" value="find" />
+    </div>
+</form>
+
+<div class="ph"><span id="searchpr" style="display:none">Searching...</span></div>
+<div id="userslist">
+    @if (Model.Users != null)
+    {       
+        Html.RenderPartial("_usersnear", Model.Users);
+    }
+</div>
+<environment names="Development">
+    <script async src="~/js/GeoLocation.js" asp-append-version="true"></script>
+    <script async src="~/js/pagespecific/user/NearMeCommon.js" asp-append-version="true"></script>
+    <script async src="~/js/pagespecific/user/NearMeGeo.js" asp-append-version="true"></script>
+    <script async src="~/js/autoSearch.js" asp-append-version="true"></script>
+    <script async src="~/js/site.js" asp-append-version="true"></script>
+
+
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/user/nearmegeo.min.js" asp-append-version="true"></script>
+</environment>
+
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="">Home</a></li>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+    </ul>
+}
+
+@section bottomnav {
+<ul>
+    <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+    <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+</ul>
+}

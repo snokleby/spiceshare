@@ -1,0 +1,262 @@
+﻿/*
+    https://color.adobe.com/nb/create/color-wheel/?base=2&rule=Triad&selected=0&name=Mitt%20Color-tema&mode=rgb&rgbvalues=0.5262429942964374,0.7,0.5078170382121001,0.9312445569914651,0.9230183194833581,1,0.8421879903939169,1,0.8254529117315716,0.8,0.6676502979277925,0.5803623293852573,0.7,0.6078265674513093,0.5470358625626949&swatchOrder=0,1,2,3,4
+
+*/ 
+html,body,ul,li,h1,.sl {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    justify-content: space-between;
+    font-family: -apple-system, BlinkMacSystemFont, 
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+    "Fira Sans", "Droid Sans", "Helvetica Neue", 
+    sans-serif;
+}
+a,li > a, li.sl > a , .lg , .act{
+       display: inline-block;
+}
+ul,body, .sc, .bg{
+    display: table;
+    display: flex;
+    flex-direction: column;
+}
+
+input, select, textarea, button{font-family:inherit;}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+#hw,.field-validation-error {
+    background: #EDEBFF;
+    padding: 10px;
+}
+
+/* on white background */
+input:focus, input:active, button:focus, button:active, a:focus, a:active,.act:focus, .act:active, li.sl a:active, li.sl a:focus{
+    outline: 2px dashed #455c42;
+    border-color: #455c42;
+    box-shadow: 0 0 10px #455c42;
+}
+
+
+footer a:active, footer a:focus, li>a:active, li>a:focus {
+    outline: 2px dashed #D7FFD2;
+    border-color: #D7FFD2;
+    box-shadow: 0 0 10px #D7FFD2;
+ }
+
+a.lg:active, a.lg:focus {
+    outline: 0;
+     border: 0;
+   box-shadow: none;
+
+}
+
+/*on dark background*/
+ li>a:active, li>a:focus{
+          background: #dec8ba;
+}
+
+.sk a {
+    z-index: 2;
+    position: absolute;
+    left: -3000px;
+}
+.sk a:active, .sk a:focus {
+    left: 10px;
+    background: #455c42;
+       color: #fff;
+ 
+}
+
+footer {
+    min-height: 100px;
+     color: #fff;
+    padding: 10px;
+}
+
+.sk a:active, .sk a:focus, footer, nav{
+    background: #455c42;
+   
+}
+
+footer a, footer a:visited {
+     color: #fff;
+ }
+
+p {
+    padding: 10px 0;
+}
+
+ .lg svg {
+    height: 38px;
+    width: 23px;  
+    transition: fill 0.5s ease;
+    fill:#c73f17;
+}
+.lg svg:hover {
+   fill:#f0ed3c;
+}
+a.lg {
+    stroke-width:1px;stroke:#000;
+}
+a.lg:active, a.lg:focus {
+    stroke-width:8px;
+    stroke-dasharray:8,8;
+}
+
+caption,h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.act {
+        padding: 5px 10px;
+        background: #CCAA94;
+        margin: 10px 5px;
+        min-width: 150px;
+        font-size: 20px;
+        text-decoration: none;
+        -webkit-appearance: none;
+        border: 0;
+        text-align: center;
+        min-height: 30px;
+}
+.act:hover, a:hover,li.sl > a:hover, .h{
+    background: #D7FFD2;
+}
+footer a:hover {
+     background: #364733; /*Darken*/
+}
+
+.hh, .hd, .hm  {/* h1 in header*/
+    display: none;
+}
+.h { /*header*/
+    height: 40px;
+    display:flex;
+}
+
+
+/* No color below this*/
+
+
+
+h1 {
+    text-align: center;
+}
+
+
+.bh {/*Body-headline*/
+     margin-bottom: 10px;
+}
+
+a {
+    padding: 3px;
+    color: #000;
+}
+a:visited {
+    color: #000;
+}
+
+/* context menu on top*/
+ul
+{
+    list-style-type: none;   
+    justify-content: space-around;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+li {
+    display: table-cell;
+    display: flex;    
+    margin: 5px;
+    flex: 1 0 auto;
+   
+}
+
+li > a {
+    padding: 5px 10px;
+    text-decoration: none;
+    width: 100%;
+    background: #CCAA94;
+    text-align: center;
+}
+
+main {
+    padding: 10px;
+}
+
+
+main.wf {
+     max-width: 900px;
+}
+
+main, footer > div {
+    margin: 0 auto;
+    max-width: 500px;
+    flex: 1 1 auto;
+}
+
+section {
+    max-width: 400px;
+    width: 100%;
+}
+
+.sc { /*SubContent*/
+    width: 100%;
+   align-items: center;
+}
+
+
+@media (min-width: 500px) {
+    .hm {
+        display: block;
+    }
+    .hb,.bh {
+        display : none;
+    }
+    .hh {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+        height: 40px;
+    }
+    ul,.bg {
+        flex-direction: row;
+    }
+    .bg {
+        justify-content: center;
+    }
+   
+    .h {
+        min-height: 60px;
+    }
+
+    .lg svg {
+         width: 36px;
+    height: 60px;
+    }
+
+}
+
+@media (min-width: 900px) {
+   .sc {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-start; 
+    }
+
+    .lg svg {
+     width: 61px;
+    height: 100px;
+    }
+}

@@ -1,0 +1,10 @@
+﻿@model SpiceShare.Models.FrontPageViewModel
+    @if (Model.LatestSpices != null)
+    {
+        <h2>Most recent spices added</h2>
+        foreach (var spice in Model.LatestSpices)
+        {
+            <a asp-controller="Spice" style="margin-bottom: 5px;" asp-action="SpicePage" asp-route-id="@(spice.SpiceId)">@spice.Name</a>
+            <br />
+        }
+    }

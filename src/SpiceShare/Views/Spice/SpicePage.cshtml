@@ -1,0 +1,53 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using SpiceShare.ImageProcessing
+@model SpiceShare.Models.SpiceViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+    ViewData["WideForm"] = true;
+}
+
+<strong>Owner: </strong> @Model.UserName<br/>
+<strong>Information: </strong>
+<span>@Model.Info</span>
+<div class="bg">
+    <a asp-action="UserPage" asp-controller="User" asp-route-id="@Model.UserId" class="act">Borrow this spice</a>
+    <br/>
+</div>
+@if(!string.IsNullOrEmpty(Model.Image.BaseFileName)) {
+
+
+        var srcsetStr = "";
+        foreach (ImageSize size in Enum.GetValues(typeof(ImageSize)))
+        {
+            srcsetStr = srcsetStr + Model.Image.WebPathForSize(size) + " " + Model.Image.WidthForSize(size) + "w, ";
+
+        }
+        srcsetStr = srcsetStr.Substring(0, srcsetStr.Length - 1);
+    
+        <img style="margin: 0 auto; max-width: 100%" sizes="(max-width: 900px) 95vw, 880px"
+             srcset="@srcsetStr"
+             src="@(Model.Image.WebPathForSize(ImageSize.Tiny))" alt="@Model.Image.AlternativeDescription" />
+}
+
+<environment names="Staging,Production,Development">
+    <script async src="~/jsmin/spice/publicspicepage.min.js" asp-append-version="true"></script>
+</environment>
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}

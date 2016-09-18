@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{46086FBB-73FB-4631-BBA7-BDCF3A29EADE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{344DF5C4-DA88-48D8-A23F-5FCF7D86053D}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		src\SpiceShare\wwwroot\imageupload.js = src\SpiceShare\wwwroot\imageupload.js
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpiceShare", "src\SpiceShare\SpiceShare.xproj", "{3CC99E5D-84B1-4F91-AE18-FC828955B2E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CC99E5D-84B1-4F91-AE18-FC828955B2E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC99E5D-84B1-4F91-AE18-FC828955B2E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC99E5D-84B1-4F91-AE18-FC828955B2E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC99E5D-84B1-4F91-AE18-FC828955B2E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3CC99E5D-84B1-4F91-AE18-FC828955B2E0} = {46086FBB-73FB-4631-BBA7-BDCF3A29EADE}
+	EndGlobalSection
+EndGlobal

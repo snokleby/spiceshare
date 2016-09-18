@@ -1,0 +1,130 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@{
+    ViewData["Title"] = "Add photo of the spice";
+    ViewData["WideForm"] = true;
+    ViewData["HasForm"] = true;
+
+
+}
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using SpiceShare.Models
+@model SpiceShare.Models.SpiceViewModel
+@{
+    var uploadModel = new ImageUploadViewModel()
+    {
+        IdType = IdentityType.Spice,
+        Identity = Model.SpiceIdentity,
+    };
+}
+@section style {
+    .rwf /*row-filler*/ {
+    width: 100%;
+}
+    .rw { /*row*/
+    display: table;
+    display: flex;
+    min-height: 40px;
+    justify-content: space-between;
+    align-items: center;
+
+    .rw button,.rw input {
+    flex: 1;
+    width: 100%;
+}
+}
+}
+<p>Add a photo using the buttons below. The method of adding the photo will depend on the capabilites of your device. </p>
+
+<span style="display:block" asp-validation-for="Image"></span>
+
+<div class="sc">
+   
+    <section class="hd" id="html5videoarea">
+        <button class="act sc" style="display: none" id="enh5ct">Take a photo with your camera</button>
+
+        <div class="hd" id="h5ct">
+            <div class="select rw">
+                <div>1:</div>
+                <div class="rwf">
+                    <label for="videoSource">Select video source: </label><select id="videoSource"></select>
+                </div>
+            </div>
+            <div class="rw">
+                <div>2:</div>
+                <div class="rwf">
+                    <button class="act sc" id="startcapture">turn on camera</button>
+                </div>
+            </div>
+            <div id="cameraeara" class="hd">
+                <div class="rw">
+                    <div>3:</div>
+                    <div class="rwf">
+                        <span id="snapwait">Remember to accept usage of camera if asked.</span>
+                        <span class="w" style="display: none" id="camfail"></span>
+                        <div style="display: none;" id="cambtnsec">
+                            <span>Wait for image to apear below. Then capture the photo using the button</span>
+                            <button class="act sc" id="snap" data-uploadpath="@uploadModel.UploadApiPath" data-returnpath="@uploadModel.PrivatePagePath" data-returnidentity="@uploadModel.Identity">Capture Photo</button>
+                        </div>
+
+                    </div>
+                </div>
+                <span style="display: none" id="waitupload"></span>
+                <span style="display: none" id="uploaddone">Upload complete</span>
+                <span style="display: none" id="uploadfail" class="w"></span>
+                <video id="video" width="100%" height="100%" autoplay></video>
+                <canvas style="display: none" id="canvas"></canvas>
+            </div>
+            <br/><br/>
+        </div>
+    </section>
+    <section id="fallbackvideoarea" class="">
+        <button class="act sc" style="display: none" id="enablefbct">Upload a photo from you device</button>
+        <div class="dhj" id="fbct">
+
+            <form asp-controller="Spice" asp-action="TakeSpicePhoto" enctype="multipart/form-data" class="imgform">
+                <div class="rw">
+                    <div> 1:</div>
+                    <div class="rwf">
+                        <input type="file" class="act sc" name="file" value="select photo" accept="image/*">
+                        <!--[if lte IE 9]>
+                            <input type="file" name="file"/>
+                             <input type="submit" value="upload selected photo"/>
+                        <![endif]-->
+                    </div>
+                </div>
+                <div class="rw">
+                    <div>2:</div>
+                    <div class="rwf">
+                        <input type="hidden" asp-for="SpiceIdentity"/>
+                        <input type="submit" class="act sc" value="upload selected photo"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</div>
+<p>By submitting an image, you agree to have the image processed by Microsoft Cognetive Services, and the <a target="new" href="http://research.microsoft.com/en-us/um/legal/CognitiveServicesTerms20160804.htm">Microsoft Cognitive Services Terms</a>. If the image contains persons, you agree to have a consent from these persons to have the image processed.</p>
+
+<environment names="Development">
+    <script async src="~/js/imageupload.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/imageupload.min.js" asp-append-version="true"></script>
+</environment>
+
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="">Home</a></li>
+        <li><a asp-controller="User" asp-action="PrivateUserPage" asp-route-identity="@Model.UserIdentity">Your private page</a></li>
+        <li><a asp-controller="Spice" asp-action="PrivateSpicePage" asp-route-identity="@Model.SpiceIdentity">Spice private page</a></li>
+    </ul>
+}
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Spice" asp-action="PrivateSpicePage" asp-route-identity="@Model.SpiceIdentity">Spice private page</a></li>
+        <li><a asp-controller="User" asp-action="PrivateUserPage" asp-route-identity="@Model.UserIdentity">Your private page</a></li>
+    </ul>
+}
