@@ -93,9 +93,17 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/jsmin/home/share.min.js",
+    "outputFileName": "wwwroot/jsmin/home/index.min.js",
     "inputFiles": [
-      "wwwroot/js/pagespecific/home/share.js"
+      "wwwroot/js/Prefetch.js",
+      "wwwroot/js/pagespecific/home/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/jsmin/user/nearme.min.js",
+    "inputFiles": [
+      "wwwroot/js/Prefetch.js",
+      "wwwroot/js/pagespecific/user/nearme.js"
     ]
   }
 ]

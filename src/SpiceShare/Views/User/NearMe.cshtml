@@ -5,26 +5,29 @@
 @{
     ViewData["Title"] = "Spices near me";
 }
-@section metahead {
-    <link rel="prefetch" href="/User/NearMeGeo" />
-    <link rel="prefetch" href="/User/NearMeZip" />
-}
+
 <p>You can locate people near you that share spice in two different ways:</p>
 <div class="bg">
     <a class="act" asp-action="NearMeGeo" asp-controller="User">Search using your current location</a>
     <a class="act" asp-action="NearMeZip" asp-controller="User">Search using country and zip/postal-code</a>
 </div>
-@{ Html.RenderPartial("_BaseJsInclude");}
-@section nav {
-    <ul>
-        <li><a asp-controller="Home" asp-action="">Home</a></li>
-
-        <li><a asp-controller="Home" asp-action="share">Share a spice</a></li>
-    </ul>
+@{
+<environment names="Development">
+    <script async src="~/js/pagespecific/user/nearme.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/user/nearme.min.js" asp-append-version="true"></script>
+</environment>
 }
 
+@section nav {
+<ul>
+    <li><a asp-controller="Home" asp-action="">Home</a></li>
+    <li><a asp-controller="Home" asp-action="share">Share a spice</a></li>
+</ul>
+}
 @section bottomnav {
-    <ul>
-        <li><a asp-controller="Home" asp-action="share">Share a spice</a></li>
-    </ul>
+<ul>
+<li><a asp-controller="Home" asp-action="share">Share a spice</a></li>
+</ul>
 }

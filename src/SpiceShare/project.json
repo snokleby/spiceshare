@@ -20,13 +20,13 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "ImageProcessorCore": "1.0.0-alpha-999",
+    "Ngonzalez.ImageProcessorCore": "0.0.1",
     "Microsoft.EntityFrameworkCore": "1.0.0",
     "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0",
     "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
     "Microsoft.Extensions.Caching.Memory": "1.0.0",
     "Microsoft.AspNet.WebApi.Client": "5.2.3",
-    "System.Runtime.Serialization.Xml": "4.1.1" 
+    "System.Runtime.Serialization.Xml": "4.1.1"
   },
 
   "tools": {
