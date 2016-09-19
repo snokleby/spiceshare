@@ -95,6 +95,7 @@
   {
     "outputFileName": "wwwroot/jsmin/home/index.min.js",
     "inputFiles": [
+      "wwwroot/js/site.js",
       "wwwroot/js/Prefetch.js",
       "wwwroot/js/pagespecific/home/index.js"
     ]
@@ -102,6 +103,7 @@
   {
     "outputFileName": "wwwroot/jsmin/user/nearme.min.js",
     "inputFiles": [
+      "wwwroot/js/site.js",
       "wwwroot/js/Prefetch.js",
       "wwwroot/js/pagespecific/user/nearme.js"
     ]
