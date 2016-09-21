@@ -81,8 +81,7 @@ footer {
 }
 
 .sk a:active, .sk a:focus, footer, nav{
-    background: #455c42;
-   
+    background: #455c42;   
 }
 
 footer a, footer a:visited {
@@ -140,7 +139,9 @@ footer a:hover {
 }
 .h { /*header*/
     height: 40px;
-    display:flex;
+    display: table;
+    display: flex;
+
 }
 
 
@@ -179,7 +180,6 @@ li {
     display: flex;    
     margin: 5px;
     flex: 1 0 auto;
-   
 }
 
 li > a {
