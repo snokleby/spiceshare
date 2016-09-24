@@ -18,6 +18,11 @@ Images are resized and stripped for meta-data after they are uploaded by the use
 The default src for the image is resized to always be less than 2.4 kB, to ensure the whole page
 is loaded in less than 10kB.
 
+The demo-site is reset to a default state every hour. 
+To avoid a performance-hit by checking this state when generating the page, an ascync call is done after the page is loaded.
+This means that the site is sometimes reset after a page load, so that the content on that page might no longer be valid.
+This feature is in place to keep the site clean, and would be removed in a real production environment.
+
 ## Interoperability and Progressive enhancement 
 
 A tiny bit of Javascript is inlined at the start of the HTML. This code generates a css-class that is used to 
