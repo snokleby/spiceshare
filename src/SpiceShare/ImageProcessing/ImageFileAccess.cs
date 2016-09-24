@@ -49,24 +49,19 @@ namespace SpiceShare.ImageProcessing
         public void GenerateSizesOnDisk(string subPath, MultiSizeImage image, IdentityType typeOfImage)
         {
             GenerateSizeOnDisk(image.WidthForSize(ImageSize.Huge), subPath, image.OriginalFileName,
-                       image.FileNameForSize(ImageSize.Huge), typeOfImage);
-            foreach (ImageSize size in Enum.GetValues(typeof(ImageSize)))
-            {
-                if (size == ImageSize.Huge)
-                    continue;
-                if (size == ImageSize.Tiny)
-                   continue;
-                
-            GenerateSizeOnDisk(image.WidthForSize(size), subPath, image.FileNameForSize(ImageSize.Huge),
-                        image.FileNameForSize(size), typeOfImage);
-                
-            }
-            GenerateImageWithSize(image.WidthForSize(ImageSize.Tiny), 2400, subPath, image.FileNameForSize(ImageSize.Medium),
+                       image.FileNameForSize(ImageSize.Huge), typeOfImage, true);
+            GenerateSizeOnDisk(image.WidthForSize(ImageSize.Large), subPath, image.FileNameForSize(ImageSize.Huge),
+                image.FileNameForSize(ImageSize.Large), typeOfImage, false);
+            GenerateSizeOnDisk(image.WidthForSize(ImageSize.Medium), subPath, image.FileNameForSize(ImageSize.Large),
+               image.FileNameForSize(ImageSize.Medium), typeOfImage, false);
+            GenerateSizeOnDisk(image.WidthForSize(ImageSize.Small), subPath, image.FileNameForSize(ImageSize.Medium),
+              image.FileNameForSize(ImageSize.Small), typeOfImage, false);           
+            GenerateImageWithSize(image.WidthForSize(ImageSize.Tiny), 2400, subPath, image.FileNameForSize(ImageSize.Small),
                     image.FileNameForSize(ImageSize.Tiny), 40, typeOfImage);
             
         }
 
-        private void GenerateSizeOnDisk(int width, string subPath, string inFileName, string outFileName, IdentityType typeOfImage)
+        private void GenerateSizeOnDisk(int width, string subPath, string inFileName, string outFileName, IdentityType typeOfImage, bool stripExif)
         {
             subPath = GetCompleteFileName(subPath, typeOfImage);
             var fullInPath = Path.Combine(subPath, inFileName);
@@ -76,9 +71,15 @@ namespace SpiceShare.ImageProcessing
             using (MemoryStream semiOut = new MemoryStream())
             {
                 var image = new Image(stream);
-                image.Resize(width, 0).Save(semiOut, new JpegEncoder() { Quality = 75, });
-                semiOut.Position = 0;
-                PatchAwayExif(semiOut, output);
+                if (stripExif)
+                {
+                    image.Resize(width, 0).Save(semiOut, new JpegEncoder() { Quality = 75, });
+                    semiOut.Position = 0;
+                    PatchAwayExif(semiOut, output);
+                } else
+                {
+                    image.Resize(width, 0).Save(output, new JpegEncoder() { Quality = 75, });
+                }
             }
         }
 
@@ -89,12 +90,9 @@ namespace SpiceShare.ImageProcessing
             var fullOutPath = Path.Combine(subPath, outFileName);
             using (FileStream stream = System.IO.File.OpenRead(fullInPath))
             using (FileStream output = System.IO.File.OpenWrite(fullOutPath))
-            using (MemoryStream semiOut = new MemoryStream())
             {
                 var image = new Image(stream);
-                image.Resize(width, 0).Save(semiOut, new JpegEncoder() { Quality = quality, });
-                semiOut.Position = 0;
-                PatchAwayExif(semiOut, output);
+                image.Resize(width, 0).Save(output, new JpegEncoder() { Quality = quality, });               
             }
             var generatedFileSize = new System.IO.FileInfo(fullOutPath).Length;
             if (generatedFileSize > fileSize)

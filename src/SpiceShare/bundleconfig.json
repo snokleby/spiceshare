@@ -55,6 +55,13 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/jsmin/spice/process.min.js",
+    "inputFiles": [
+      "wwwroot/js/pagespecific/spice/process.js",
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/jsmin/user/nearmegeo.min.js",
     "inputFiles": [
       "wwwroot/js/Geolocation.js",

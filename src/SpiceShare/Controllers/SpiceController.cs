@@ -107,8 +107,6 @@ namespace SpiceShare.Controllers
                 var thisImage = new MultiSizeImage("upload", extension);
                 var subPath = ImageFileAccess.GetPath(theSpice.SpiceId.ToString(), Models.IdentityType.Spice);
                 var da = new ImageFileAccess(_hostingEvn);
-                Task<string> descTask = null;
-                Task<bool> safeTask = null;
                 var orignalUrl = ApiController.GetOriginalUrl(Request, theSpice, thisImage);
 
                 try
@@ -128,11 +126,42 @@ namespace SpiceShare.Controllers
                         return TooLargeImage(da, subPath, theSpice);
                     }
                 }
-                
+                theSpice.ImageFileName = thisImage.BaseFileName;
+                theSpice.ImageFileExtension = thisImage.FileExtension;
+                theSpice.ImgUploaded = DateTime.Now;
+                db.SaveChanges();
+            }
+            return RedirectToAction("ProcessImage", new { SpiceIdentity = SpiceIdentity });
+        }
+        public async Task<IActionResult> ProcessImage(Guid SpiceIdentity)
+        {
+            var model = new ProcessImageViewModel();
+            model.SpiceIdentity = SpiceIdentity;
+            return View(model);
+        }
+        public async Task<IActionResult> _ProcessImage(Guid SpiceIdentity)
+        {
+            Task<string> descTask = null;
+            Task<bool> safeTask = null;
+
+            using (var db = new SpiceContext())
+            {
+                var theSpice =
+                    db.Spices.Include(spices => spices.User).FirstOrDefault(m => m.SpiceIdentity == SpiceIdentity);
+                if (theSpice == null)
+                {
+                    return View("expired");
+                }
+                var thisImage = new MultiSizeImage(theSpice.ImageFileName, theSpice.ImageFileExtension);
+                var subPath = ImageFileAccess.GetPath(theSpice.SpiceId.ToString(), Models.IdentityType.Spice);
+                var da = new ImageFileAccess(_hostingEvn);
+                var orignalUrl = ApiController.GetOriginalUrl(Request, theSpice, thisImage);
+
                 safeTask = CognetiveServices.IsSafeContent(orignalUrl);
                 descTask = CognetiveServices.GetDescription(orignalUrl);
-
-                try { 
+       
+                try
+                {
                     try
                     {
                         da.GenerateSizesOnDisk(subPath, thisImage, IdentityType.Spice);
@@ -142,8 +171,9 @@ namespace SpiceShare.Controllers
                         return AddNotsupportedError(theSpice);
                     }
                 }
+
                 catch (Exception) //supert dirty, should refactor.
-                {                  
+                {
                     try
                     {
                         da.GenerateSizesOnDisk(subPath, thisImage, IdentityType.Spice);
@@ -159,13 +189,9 @@ namespace SpiceShare.Controllers
                     return DeleteImagesAndAddUnwantedContentError(da, subPath, theSpice);
                 }
                 theSpice.AltText = descTask.Result;
-                
-                theSpice.ImageFileName = thisImage.BaseFileName;
-                theSpice.ImageFileExtension = thisImage.FileExtension;
-                theSpice.ImgUploaded = DateTime.Now;
                 db.SaveChanges();
             }
-            return RedirectToAction("PrivateSpicePage", new {identity = SpiceIdentity });
+            return RedirectToAction("PrivateSpicePage", new { identity = SpiceIdentity });
         }
 
         private IActionResult AddNotsupportedError(Spice theSpice)

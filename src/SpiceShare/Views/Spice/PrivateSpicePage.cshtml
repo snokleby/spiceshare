@@ -57,7 +57,7 @@ else if (Model.IsValid)
             @if (string.IsNullOrEmpty(Model.Image.BaseFileName))
             {
                 <div class="bg">
-                    <a class="act" asp-action="TakeSpicePhoto" asp-controller="spice" asp-route-spiceIdentity="@(Model.SpiceIdentity)">Take photo</a>
+                    <a class="act" asp-action="TakeSpicePhoto" asp-controller="spice" asp-route-spiceIdentity="@(Model.SpiceIdentity)">Add photo</a>
                 </div>
             }
             else

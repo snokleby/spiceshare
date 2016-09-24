@@ -1,0 +1,38 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using SpiceShare.ImageProcessing
+@model SpiceShare.Models.ProcessImageViewModel
+
+@{
+    ViewData["Title"] = "Processing image.";
+    ViewData["WideForm"] = true;
+}
+<div class="bg dhj">
+   <a class="act" asp-action="_ProcessImage" asp-route-SpiceIdentity="@(Model.SpiceIdentity)" asp-controller="Spice">Click here to continue</a>
+</div>
+<div id="procid" data-spiceidentity="@(Model.SpiceIdentity)"></div>
+<strong>Please be patient. We are both resizing your picture, and figuring out what is in the picture.</strong>
+<environment names="Development">
+    <script async src="~/js/pagespecific/spice/process.js" asp-append-version="true"></script>
+</environment>
+<environment names="Staging,Production">
+    <script async src="~/jsmin/spice/process.min.js" asp-append-version="true"></script>
+</environment>
+
+@section nav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
+
+@section bottomnav {
+    <ul>
+        <li><a asp-controller="Home" asp-action="Share">Share a spice</a></li>
+        <li><a asp-controller="User" asp-action="NearMeZip">Search using Zip/postal code</a></li>
+        <li><a asp-controller="User" asp-action="NearMeGeo">Search using position</a></li>
+    </ul>
+}
