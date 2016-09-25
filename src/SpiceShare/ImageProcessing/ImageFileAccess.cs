@@ -57,7 +57,7 @@ namespace SpiceShare.ImageProcessing
             GenerateSizeOnDisk(image.WidthForSize(ImageSize.Small), subPath, image.FileNameForSize(ImageSize.Medium),
               image.FileNameForSize(ImageSize.Small), typeOfImage, false);           
             GenerateImageWithSize(image.WidthForSize(ImageSize.Tiny), 2400, subPath, image.FileNameForSize(ImageSize.Small),
-                    image.FileNameForSize(ImageSize.Tiny), 40, typeOfImage);
+                    image.FileNameForSize(ImageSize.Tiny), 20, typeOfImage);
             
         }
 
@@ -103,7 +103,7 @@ namespace SpiceShare.ImageProcessing
                     GenerateImageWithSize(width, fileSize, subPath, inFileName, outFileName, (int)(quality - 10), typeOfImage);
                 } else
                 {
-                    GenerateImageWithSize((int)Math.Round(width*0.75), fileSize, subPath, inFileName, outFileName, (int)(quality + 30), typeOfImage);
+                    GenerateImageWithSize((int)Math.Round(width*0.5), fileSize, subPath, inFileName, outFileName, (int)(quality + 15), typeOfImage);
                 }
                
             }

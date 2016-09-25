@@ -55,7 +55,7 @@ namespace SpiceShare.Helpers
                 Method = HttpMethod.Post,
                 Content = new StringContent($"{{ \"url\" : \"{imgUrl}\" }}", Encoding.UTF8, "application/json")
             };
-            request.Headers.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("Ocp-Apim-Subscription-Key"));
+            request.Headers.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("OcpKey"));
             return await client.SendAsync(request);
         }
     }
